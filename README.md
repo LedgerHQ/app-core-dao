@@ -1,14 +1,15 @@
 
 
-## The Foo app
+## CoreDAO app
 
-This repository implements a protocol for clear signing transactions of a specific format that the bitcoin app does not support.
+This repository implements the CoreDAO protocol for clear signing transactions of a specific format that the bitcoin app does not support.
 
-The Foo protocol expect transactions that are just like nmormal transactions (inputs and change outputs from a standard account compliant to BIP-44, BIP-49, BIP-84 or BIP-86), plus in additionn:
-- a special 'magic input' that is a P2TR UTXO with taproot public key at a the fixed derivation path `m/86'/1'/99'`.
-- an `OP_RETURN` output with the message `FOO`.
+This application allows 3 types of transaction (stake, unstake, restake):
+- Stake transaction contains internal inputs and at most 3 outputs (the locking output, a OP_RETURN output and an optional change)
+- Unstake transaction spend a locking UTXO and must have exactly one output (on a change address)
+- Restake contain internal inputs and an input spending the locking UTXO and at most 3 outputs (same as the Stake transaction)
 
-The app's UX validates that the transaction satisfies this protocol, and shows all the transaction details in the UX.
+This application assumes the lock output is receivable and spendable on a unique path `84h/0h/0h/0/0`
 
 ## Compiling the app
 
@@ -34,5 +35,7 @@ $ pip install ledger_bitcoin
 Launch the app in speculos using another terminal, then launch the test script:
 
 ```
-python test.py
+python test_stake.py
+python test_unstake.py
+python test_restake.py
 ```
