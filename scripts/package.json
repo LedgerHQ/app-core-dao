@@ -1,0 +1,21 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bip32": "5.0.0-rc.0",
+    "bitcoinjs-lib": "^6.1.7",
+    "ecdsa": "^0.7.0",
+    "ecpair": "3.0.0-rc.0",
+    "ledger-bitcoin": "^0.2.3",
+    "tiny-secp256k1": "^2.2.3",
+    "uint8array-tools": "^0.0.9"
+  }
+}

@@ -28,7 +28,7 @@ APPVERSION = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 APPDEVELOPPER="Ledger"
 APPCOPYRIGHT="(c) 2025 Ledger"
 
-VARIANT_VALUES = foo foo_testnet
+VARIANT_VALUES = core_dao core_dao_testnet
 
 # Application source files
 # There is no additional sources for bitcoin
@@ -36,20 +36,20 @@ VARIANT_VALUES = foo foo_testnet
 
 # simplify for tests
 ifndef COIN
-COIN=foo_testnet
+COIN=core_dao_testnet
 endif
 
 # Enabling DEBUG flag will enable PRINTF and disable optimizations
-#DEBUG = 1
+DEBUG = 10
 
-APP_DESCRIPTION ="This app enables signing\nFoo transactions\nfor all you Fools."
+APP_DESCRIPTION ="This app enables to\nstake bitcoin\non CoreDAO."
 
-ifeq ($(COIN),foo)
-APPNAME ="Foo"
+ifeq ($(COIN),core_dao)
+APPNAME ="CoreDAO"
 BITCOIN_NETWORK =mainnet
 
-else ifeq ($(COIN),foo_testnet)
-APPNAME ="Foo Testnet"
+else ifeq ($(COIN),core_dao_testnet)
+APPNAME ="CoreDAO Testnet"
 BITCOIN_NETWORK =testnet
 
 else ifeq ($(filter clean,$(MAKECMDGOALS)),)
@@ -60,9 +60,9 @@ APP_SOURCE_PATH += bitcoin_app_base/src src
 
 # Application icons following guidelines:
 # https://developers.ledger.com/docs/embedded-app/design-requirements/#device-icon
-ICON_NANOX = icons/nanox_app_foo.gif
-ICON_NANOSP = icons/nanox_app_foo.gif
-ICON_STAX = icons/stax_app_foo.gif
-ICON_FLEX = icons/flex_app_foo.gif
+ICON_NANOX = icons/nanox_app_core.gif
+ICON_NANOSP = icons/nanox_app_core.gif
+ICON_STAX = icons/stax_app_core.gif
+ICON_FLEX = icons/flex_app_core.gif
 
 include bitcoin_app_base/Makefile

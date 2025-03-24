@@ -37,3 +37,6 @@ doc/html
 doc/latex
 
 tests/snapshots-tmp
+
+.DS_Store
+node_modules

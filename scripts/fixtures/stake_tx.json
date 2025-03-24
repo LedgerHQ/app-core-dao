@@ -1,0 +1,26 @@
+{
+    "policy": "wpkh(@0/**)",
+    "wallet": "[f5acc2fd/84'/1'/0']tpubDCtKfsNyRhULjZ9XMS4VKKtVcPdVDi8MKUbcSD9MJDyjRu1A2ND5MiipozyyspBT9bg8upEp7a8EAgFxNxXn1d7QkdbL52Ty5jiSLcxPt1P",
+    "tx": {
+        "version": 2,
+        "inputs": [
+            {
+                "forge": {
+                    "amount": 310000000,
+                    "inputCount": 1,
+                    "recipient": "0/0"
+                }
+            }
+        ],
+        "outputs": [
+            {
+                "script": "0020dae229f92c97bd0398de83f7bb18d547ffe074a534b0caab126dc6773b890d34",
+                "value": 300000000
+            },
+            {
+                "script": "6a4c505341542b01045bde60b7d0e6b758ca5dd8c61d377a2c5f1af51ec1a9e209f5ea0036c8c2f41078a3cebee57d8a47d501041f5e0e66b17576a9141347e82a037b5dbb38cf8c4759f242b1f5c7e09a88ac",
+                "value": 0
+            }
+        ] 
+    }
+}
