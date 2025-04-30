@@ -20,12 +20,10 @@ static void review_choice(bool approved) {
 
 #define MAX_N_PAIRS 9
 
-bool display_transaction(
-    dispatcher_context_t *dc,
-    int64_t value_spent, 
-    uint64_t fee, 
-    core_dao_tx_info_t *info
-    ) {
+bool display_transaction(dispatcher_context_t *dc,
+                         int64_t value_spent,
+                         uint64_t fee,
+                         core_dao_tx_info_t *info) {
     nbgl_layoutTagValue_t pairs[MAX_N_PAIRS];
     nbgl_layoutTagValueList_t pairList;
 
@@ -47,77 +45,69 @@ bool display_transaction(
     snprintf(core_fee_str, 4, "%d", info->fee);
 
     if (info->chain_id == CHAID_ID_MAINNET) {
-        chain_id = (char *)"Mainnet";
+        chain_id = (char *) "Mainnet";
     } else if (info->chain_id == CHAIN_ID_TESTNET) {
-        chain_id = (char *)"Testnet";
+        chain_id = (char *) "Testnet";
     } else if (info->chain_id == CHAIN_ID_TESTNET2) {
-        chain_id = (char *)"Testnet2";
+        chain_id = (char *) "Testnet2";
     } else {
-        chain_id = (char *)"Unknown";
+        chain_id = (char *) "Unknown";
     }
 
     if (info->type & TYPE_TX_LOCK && info->type & TYPE_TX_UNLOCK) {
-        operation_type = (char *)"Restake";
+        operation_type = (char *) "Restake";
     } else if (info->type & TYPE_TX_LOCK) {
-        operation_type = (char *)"Stake";
+        operation_type = (char *) "Stake";
     } else if (info->type & TYPE_TX_UNLOCK) {
-        operation_type = (char *)"Unstake";
+        operation_type = (char *) "Unstake";
     }
 
     int n_pairs = 0;
-    pairs[n_pairs++] = (nbgl_layoutTagValue_t){
+    pairs[n_pairs++] = (nbgl_layoutTagValue_t) {
         .item = "Transaction type",
         .value = operation_type,
     };
 
     if (info->type & TYPE_TX_LOCK) {
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {
             .item = "Stake amount",
             .value = value_str,
         };
     }
 
     if (info->type & TYPE_TX_UNLOCK) {
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {
             .item = "Unstake amount",
             .value = unstake_value_str,
         };
     }
 
     if (info->type & TYPE_TX_LOCK) {
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {
             .item = "Delegator",
             .value = delegator_str,
         };
 
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
-            .item = "Validator",
-            .value = delegator_str,
-            .forcePageStart = true
-        };
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {.item = "Validator",
+                                                    .value = delegator_str,
+                                                    .forcePageStart = true};
 
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {
             .item = "Network",
             .value = chain_id,
         };
 
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
-            .item = "Locktime (UTC+0)",
-            .value = locktime_str,
-            .forcePageStart = true
-        };
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {.item = "Locktime (UTC+0)",
+                                                    .value = locktime_str,
+                                                    .forcePageStart = true};
 
-        pairs[n_pairs++] = (nbgl_layoutTagValue_t){
-            .item = "Core fee",
-            .value = core_fee_str
-        };
+        pairs[n_pairs++] = (nbgl_layoutTagValue_t) {.item = "Core fee", .value = core_fee_str};
     }
 
-    pairs[n_pairs++] = (nbgl_layoutTagValue_t){
+    pairs[n_pairs++] = (nbgl_layoutTagValue_t) {
         .item = "Fee",
         .value = fee_str,
     };
-    
 
     assert(n_pairs <= MAX_N_PAIRS);
 
