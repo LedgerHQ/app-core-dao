@@ -28,11 +28,8 @@ APPVERSION = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 APPDEVELOPPER="Ledger"
 APPCOPYRIGHT="(c) 2025 Ledger"
 
+VARIANT_PARAM = COIN
 VARIANT_VALUES = core_dao core_dao_testnet
-
-# Application source files
-# There is no additional sources for bitcoin
-#APP_SOURCE_PATH += src/
 
 # simplify for tests
 ifndef COIN
@@ -40,17 +37,19 @@ COIN=core_dao_testnet
 endif
 
 # Enabling DEBUG flag will enable PRINTF and disable optimizations
-DEBUG = 10
+#DEBUG = 10
 
-APP_DESCRIPTION ="This app enables to\nstake bitcoin\non CoreDAO."
+APP_DESCRIPTION ="This app enables to\nlock BTC\non CoreDAO."
 
 ifeq ($(COIN),core_dao)
 APPNAME ="CoreDAO"
 BITCOIN_NETWORK =mainnet
+DEFINES += CORE_DAO_MAINNET
 
 else ifeq ($(COIN),core_dao_testnet)
 APPNAME ="CoreDAO Testnet"
 BITCOIN_NETWORK =testnet
+DEFINES += CORE_DAO_TESTNET
 
 else ifeq ($(filter clean,$(MAKECMDGOALS)),)
 $(error Unsupported COIN - use $(VARIANT_VALUES))
