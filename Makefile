@@ -39,15 +39,15 @@ endif
 # Enabling DEBUG flag will enable PRINTF and disable optimizations
 #DEBUG = 10
 
-APP_DESCRIPTION ="This app enables to\nlock BTC\non CoreDAO."
+APP_DESCRIPTION ="This app enables BTC timelocking with Core."
 
 ifeq ($(COIN),core_dao)
-APPNAME ="CoreDAO"
+APPNAME ="Core"
 BITCOIN_NETWORK =mainnet
 DEFINES += CORE_DAO_MAINNET
 
 else ifeq ($(COIN),core_dao_testnet)
-APPNAME ="CoreDAO Testnet"
+APPNAME ="Core Testnet"
 BITCOIN_NETWORK =testnet
 DEFINES += CORE_DAO_TESTNET
 
