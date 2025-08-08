@@ -29,11 +29,11 @@ APPDEVELOPPER="Ledger"
 APPCOPYRIGHT="(c) 2025 Ledger"
 
 VARIANT_PARAM = COIN
-VARIANT_VALUES = core_dao core_dao_testnet
+VARIANT_VALUES = core core_testnet
 
 # simplify for tests
 ifndef COIN
-COIN=core_dao_testnet
+COIN=core_testnet
 endif
 
 # Enabling DEBUG flag will enable PRINTF and disable optimizations
@@ -41,15 +41,15 @@ endif
 
 APP_DESCRIPTION ="This app enables BTC timelocking with Core."
 
-ifeq ($(COIN),core_dao)
+ifeq ($(COIN),core)
 APPNAME ="Core"
 BITCOIN_NETWORK =mainnet
-DEFINES += CORE_DAO_MAINNET
+DEFINES += CORE_MAINNET
 
-else ifeq ($(COIN),core_dao_testnet)
+else ifeq ($(COIN),core_testnet)
 APPNAME ="Core Testnet"
 BITCOIN_NETWORK =testnet
-DEFINES += CORE_DAO_TESTNET
+DEFINES += CORE_TESTNET
 
 else ifeq ($(filter clean,$(MAKECMDGOALS)),)
 $(error Unsupported COIN - use $(VARIANT_VALUES))

@@ -425,7 +425,7 @@ static tx_type_t validate_transaction(dispatcher_context_t *dc,
     // - The PSBT can have any number of internal inputs
     // - If at least one input is a CoreDAO input, outputs can only be change or lock output
     // For unlock TX:
-    // - If a transaction contains a spending CLTV UTXO input, it must be a valid CoreDao unlock TX
+    // - If a transaction contains a spending CLTV UTXO input, it must be a valid Core unlock TX
     // - If a transaction contains a spending CLTV UTXO input, it must have 1 unlocking output
     // For combined unlock/lock (restake) TX:
     // - All rules for both lock and unlock transactions apply, except that such a
