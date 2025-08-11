@@ -323,13 +323,13 @@ static tx_type_t validate_unlock_transaction(dispatcher_context_t *dc,
                                              const uint8_t internal_outputs[64],
                                              core_dao_tx_info_t *info) {
     merkleized_map_commitment_t external_input_map;
-    // Count the number of CoreDAO inputs
+    // Count the number of Core inputs
     info->n_core_dao_inputs = 0;
     info->unlock_amount = 0;
     for (unsigned int i = 0; i < st->n_inputs; i++) {
         PRINT("Checking input %d\n", i);
         if (bitvector_get(internal_inputs, i) == 0) {
-            // Verify if the input is a CoreDAO input (fail otherwise)
+            // Verify if the input is a Core input (fail otherwise)
             // Get commitment to the i-th input's map
             PRINT("Getting input %d\n", i);
             if (call_get_merkleized_map(dc, st->inputs_root, st->n_inputs, i, &external_input_map) <
@@ -353,7 +353,7 @@ static tx_type_t validate_unlock_transaction(dispatcher_context_t *dc,
                 return TYPE_TX_INVALID;
             }
 
-            // Check if the redeem script is a valid CoreDAO redeem script
+            // Check if the redeem script is a valid Core redeem script
             if (!validate_redeem_script(redeem_script)) {
                 PRINT("Invalid redeem script in input %d\n", i);
                 return TYPE_TX_INVALID;
@@ -362,7 +362,7 @@ static tx_type_t validate_unlock_transaction(dispatcher_context_t *dc,
             info->type |= TYPE_TX_UNLOCK;
             info->n_core_dao_inputs += 1;
             info->unlock_amount += amount;
-            bitvector_set(info->core_inputs, i, 1);  // Mark the input as a CoreDAO input
+            bitvector_set(info->core_inputs, i, 1);  // Mark the input as a Core input
         } else {
             PRINT("Internal input %d\n", i);
         }
@@ -418,14 +418,14 @@ static tx_type_t validate_transaction(dispatcher_context_t *dc,
                                       core_dao_tx_info_t *info) {
     // This application implements the following rules:
     // For lock TX:
-    // - If a transaction contains a OP_RETURN output, It must be a valid CoreDAO output
+    // - If a transaction contains a OP_RETURN output, It must be a valid Core output
     // - If a transaction contains a OP_RETURN output, It must have a locking output
     // - The PSBT can have at most 1 change output
-    // - The PSBT can have any number of CoreDAO inputs
+    // - The PSBT can have any number of Core inputs
     // - The PSBT can have any number of internal inputs
-    // - If at least one input is a CoreDAO input, outputs can only be change or lock output
+    // - If at least one input is a Core input, outputs can only be change or lock output
     // For unlock TX:
-    // - If a transaction contains a spending CLTV UTXO input, it must be a valid CoreDao unlock TX
+    // - If a transaction contains a spending CLTV UTXO input, it must be a valid Core unlock TX
     // - If a transaction contains a spending CLTV UTXO input, it must have 1 unlocking output
     // For combined unlock/lock (restake) TX:
     // - All rules for both lock and unlock transactions apply, except that such a

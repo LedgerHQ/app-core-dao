@@ -106,7 +106,7 @@ bool display_transaction(dispatcher_context_t *dc,
         chain_id = (char *) "Testnet2";
     } else {
         // Fallback to compile time defined chain ID
-#ifdef CORE_DAO_MAINNET
+#ifdef CORE_MAINNET
         chain_id = (char *) "Mainnet";
         info->chain_id = CHAID_ID_MAINNET;
 #else
