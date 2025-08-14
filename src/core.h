@@ -6,20 +6,31 @@
 #define MAX_DERIVATION_PATH_DEPTH 4
 
 #define REDEEM_SCRIPT_LEN 32
-#define SCRIPT_HASH_LEN 32
-#define LOCK_SCRIPT_LEN 34
-#define CHAID_ID_MAINNET 1116
-#define CHAIN_ID_TESTNET 1115
+#define SCRIPT_HASH_LEN   32
+#define LOCK_SCRIPT_LEN   34
+#define CHAID_ID_MAINNET  1116
+#define CHAIN_ID_TESTNET  1115
 #define CHAIN_ID_TESTNET2 1114
+
+#define P2WPKH_SCRIPT_LEN 22  // OP_0 + OP_PUSHBYTES_20 + 20 bytes of hash
+#define HASH160_LEN       20
 
 #define H 0x80000000
 
 // Useful OP_CODES
-#define OP_PUSHBYTES_4 4
+#define OP_PUSHBYTES_4  4
 #define OP_PUSHBYTES_20 20
 #define OP_PUSHBYTES_32 32
 
-#define CORE_DERIVATION_PATH {84 | H, 1 | H, 0 | H, 0, 0}
+#ifdef CORE_MAINNET
+#define CORE_DERIVATION_PATH \
+    { 84 | H, 0 | H, 0 | H, 0, 0 }
+#elif CORE_TESTNET
+#define CORE_DERIVATION_PATH \
+    { 84 | H, 1 | H, 0 | H, 0, 0 }
+#else
+#error "Net type must be defined. Define CORE_MAINNET or CORE_TESTNET"
+#endif
 #define CORE_DERIVATION_PATH_LEN 5
 
 typedef enum {
@@ -30,10 +41,17 @@ typedef enum {
 } tx_type_t;
 
 typedef struct {
-    // Global informations
+    bool is_stacking_info_output_found;
+    bool is_lock_output_found;
+    bool is_unlock_or_change_output_found;
+    uint32_t unlock_or_change_output_num;
+} core_dao_tx_outputs_t;
+
+typedef struct {
+    // Global information
     tx_type_t type;
 
-    // Stake informations
+    // Stake information
     uint16_t chain_id;
     uint8_t delegator[20];
     uint8_t validator[20];
@@ -41,40 +59,39 @@ typedef struct {
     uint8_t fee;
     uint32_t locktime;
 
-    // Unstake informations
+    // Unstake information
     uint64_t unlock_amount;
     uint32_t n_core_dao_inputs;
-    uint8_t  core_inputs[64];
+    core_dao_tx_outputs_t found_outputs;
+    uint8_t core_inputs[64];
 } core_dao_tx_info_t;
 
 /***
- * Parse the staking informations from an OP_RETURN output script
- * @param payload The payload of the OP_RETURN output script minus the OP_RETURN opcode and the data length
+ * Parse the staking information from an OP_RETURN output script
+ * @param payload The payload of the OP_RETURN output script minus the OP_RETURN opcode and the data
+ length
  * @param payload_len The length of the payload (should be 80 bytes)
  * @param info The parsed staking information
  * @param redeem_script The redeem script parsed from the payload
 
  * @return true if the parsing was successful, false otherwise
  */
-bool parse_staking_information(
-    uint8_t *payload,
-    uint32_t payload_len,
-    core_dao_tx_info_t *info,
-    uint8_t redeem_script[static REDEEM_SCRIPT_LEN]
-);
+bool parse_staking_information(uint8_t *payload,
+                               uint32_t payload_len,
+                               core_dao_tx_info_t *info,
+                               uint8_t redeem_script[static REDEEM_SCRIPT_LEN]);
 
 bool validate_redeem_script(uint8_t redeem_script[static REDEEM_SCRIPT_LEN]);
 
-bool validate_lock_script_pubkey(
-    uint8_t *lock_script_pubkey,
-    size_t lock_script_pubkey_len,
-    uint8_t redeem_script[static REDEEM_SCRIPT_LEN]
-);
+bool validate_lock_script_pubkey(uint8_t *lock_script_pubkey,
+                                 size_t lock_script_pubkey_len,
+                                 uint8_t redeem_script[static REDEEM_SCRIPT_LEN]);
 
-bool get_core_compressed_pubkey(uint8_t pubkey[static 33]);
+bool check_if_change_output(const uint32_t bip32_path[],
+                            uint8_t bip32_path_len,
+                            const uint8_t *script,
+                            int32_t script_len);
 
-bool get_core_pubkey_hash160(uint8_t hash160[static 20]);
+void buffer_to_hex(const uint8_t *buffer, size_t buffer_len, char *out, size_t out_len);
 
-bool get_core_redeem_script( uint32_t locktime, uint8_t redeem_script[static REDEEM_SCRIPT_LEN]);
-
-void buffer_to_hex(uint8_t *buffer, size_t buffer_len, char *out, size_t out_len);
+void format_address(const uint8_t *buffer, size_t buffer_len, char *out, size_t out_len);
