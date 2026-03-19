@@ -22,7 +22,7 @@
 
 #define SUPPORTED_VERSION 1
 
-static bool get_core_compressed_pubkey(const uint32_t bip32_path[],
+static cx_err_t get_core_compressed_pubkey(const uint32_t bip32_path[],
                                        uint8_t bip32_path_len,
                                        uint8_t out_pubkey[static 33]) {
     uint8_t chaincode[32];
@@ -34,7 +34,7 @@ static bool get_core_pubkey_hash160(const uint32_t bip32_path[],
                                     uint8_t bip32_path_len,
                                     uint8_t out_hash160[static 20]) {
     uint8_t pubkey[33];
-    if (!get_core_compressed_pubkey(bip32_path, bip32_path_len, pubkey)) {
+    if (CX_OK != get_core_compressed_pubkey(bip32_path, bip32_path_len, pubkey)) {
         return false;
     }
     crypto_hash160(pubkey, 33, out_hash160);
