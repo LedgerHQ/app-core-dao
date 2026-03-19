@@ -3,16 +3,19 @@
 #include <stdint.h>
 #include <string.h>
 
+/* Local headers */
 #include "core.h"
 #include "debug.h"
 
-#include "../bitcoin_app_base/src/crypto.h"
-#include "../bitcoin_app_base/src/common/script.h"
-#include "../bitcoin_app_base/src/common/read.h"
-#include "../bitcoin_app_base/src/common/write.h"
-
+/* SDK headers */
 #include "cx.h"
 #include "ledger_assert.h"
+#include "read.h"
+#include "write.h"
+
+/* Baseapp branch headers */
+#include "../bitcoin_app_base/src/crypto.h"
+#include "../bitcoin_app_base/src/common/script.h"
 
 #define EXPECTED_PAYLOAD_LEN \
     80  // SAT+(4)+ VERSION(1) + CHAIN_ID(2) + DELEGATOR(20) + VALIDATOR(20) + FEE(1) + REDEEM(32)
