@@ -63,5 +63,6 @@ ICON_NANOX = icons/nanox_app_core.gif
 ICON_NANOSP = icons/nanox_app_core.gif
 ICON_STAX = icons/stax_app_core.gif
 ICON_FLEX = icons/flex_app_core.gif
+ICON_APEX_P = icons/apex_p_app_core.png
 
 include bitcoin_app_base/Makefile
