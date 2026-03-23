@@ -22,7 +22,7 @@
 # Application version
 APPVERSION_M = 0
 APPVERSION_N = 1
-APPVERSION_P = 0
+APPVERSION_P = 1
 APPVERSION = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 
 APPDEVELOPPER="Ledger"
@@ -63,5 +63,6 @@ ICON_NANOX = icons/nanox_app_core.gif
 ICON_NANOSP = icons/nanox_app_core.gif
 ICON_STAX = icons/stax_app_core.gif
 ICON_FLEX = icons/flex_app_core.gif
+ICON_APEX_P = icons/apex_p_app_core.png
 
 include bitcoin_app_base/Makefile
