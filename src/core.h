@@ -23,11 +23,9 @@
 #define OP_PUSHBYTES_32 32
 
 #ifdef CORE_MAINNET
-#define CORE_DERIVATION_PATH \
-    { 84 | H, 0 | H, 0 | H, 0, 0 }
+#define CORE_DERIVATION_PATH {84 | H, 0 | H, 0 | H, 0, 0}
 #elif CORE_TESTNET
-#define CORE_DERIVATION_PATH \
-    { 84 | H, 1 | H, 0 | H, 0, 0 }
+#define CORE_DERIVATION_PATH {84 | H, 1 | H, 0 | H, 0, 0}
 #else
 #error "Net type must be defined. Define CORE_MAINNET or CORE_TESTNET"
 #endif
